@@ -1,0 +1,1176 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ROI GROUP API",
+    "description": "API di comunicazione tra App e CRM aziendale.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Marco Peca",
+      "url": "http://www.roisrl.com/support/",
+      "email": "web@performancestrategies.it"
+    }
+  },
+  "host": "roisrl.com",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/crm/connect_v1",
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Materiali",
+      "description": "Lista degli elementi da far visualizzare in App come Ebook, Video e Aforismi.\n"
+    },
+    {
+      "name": "Live",
+      "description": "Lista di azioni per le interazioni **LIVE** durante i corsi di formazione.\n"
+    },
+    {
+      "name": "Eventi",
+      "description": "Chiamate per interagire con gli **EVENTI** acquistati. I corsi si dividono tra **Eventi passati** e **Eventi futuri**.\n"
+    }
+  ],
+  "paths": {
+    "/ebook": {
+      "get": {
+        "description": "Resitutisce l'oggetto `Ebook`.\n",
+        "tags": [
+          "Materiali"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category_video": {
+      "get": {
+        "description": "Resitutisce un oggetto `categorie_video`.\n",
+        "tags": [
+          "Materiali"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/{id_categoria}": {
+      "get": {
+        "description": "Resitutisce l'oggetto `Video` delle categoria passata in input. L'ID della categoria viene fornito con `/category_video`\n",
+        "tags": [
+          "Materiali"
+        ],
+        "parameters": [
+          {
+            "name": "id_categoria",
+            "in": "path",
+            "description": "ID categoria video",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motivational": {
+      "get": {
+        "description": "Resitutisce un oggetto `Motivational`.\n",
+        "tags": [
+          "Materiali"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loginFromID": {
+      "post": {
+        "description": "Resitutisce un oggetto `interation_list`.\n",
+        "tags": [
+          "Live"
+        ],
+        "parameters": [
+          {
+            "name": "id_iscrizione",
+            "in": "header",
+            "description": "ID iscrizione (codice a barre)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "username",
+            "in": "header",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "description": "Password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Parametri errati in chiamata",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "ID iscrizione sbagliato",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "409": {
+            "description": "Username già utilizzato",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interation_list": {
+      "get": {
+        "description": "Resitutisce un oggetto `interation_list`.\n",
+        "tags": [
+          "Live"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comunicazioni": {
+      "get": {
+        "description": "Resitutisce un oggetto `comunicazioni`.\n",
+        "tags": [
+          "Live"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/question_app": {
+      "put": {
+        "description": "Metodo per comunicare un'interazione. L'interazione può essere una domanda o un'azione della sezione `Live`\n",
+        "tags": [
+          "Live"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "testoDomanda",
+            "in": "header",
+            "description": "Testo inviato",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interazione",
+            "in": "header",
+            "description": "ID interazione",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "id_evento",
+            "in": "header",
+            "description": "ID evento",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Metodo per eliminare un'interazione precedentemente effettuata **(NON FUNZIONA CON LE DOMANDE)**.",
+        "tags": [
+          "Live"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interazione",
+            "in": "header",
+            "description": "ID interazione",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "id_evento",
+            "in": "header",
+            "description": "ID evento",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/old_partecipazioni/": {
+      "get": {
+        "description": "Resitutisce l'oggetto `Eventi`. È un elenco di tutti i corsi a cui si è già partecipato\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Eventi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/new_partecipazioni/": {
+      "get": {
+        "description": "Resitutisce l'oggetto `Eventi`. È un elenco di tutti i corsi a cui si deve ancora partecipare\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Eventi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/download_eventi/{id_evento}/": {
+      "get": {
+        "description": "Resitutisce l'oggetto `download_eventi`. Contiene tutti i materiali disponibili al download per l'evento passato in input.\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id_evento",
+            "in": "path",
+            "description": "ID evento",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Eventi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Materiali_Evento"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profilo/{id_utente}/": {
+      "get": {
+        "description": "Resitutisce l'oggetto `profilo`. Contiene tutti i dati del profilo passato in input.\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id_utente",
+            "in": "path",
+            "description": "ID utente",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Eventi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profilo/": {
+      "put": {
+        "description": "Aggiorna il `profilo`. Restituisce un booleano \n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "utente",
+            "in": "query",
+            "description": "Array Dati Utente (json)",
+            "required": true,
+            "type": "string",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Eventi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ReturnBool"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/imgProfilo/": {
+      "get": {
+        "description": "Resitutisce l'oggetto `immagini`. Contiene tutti gli avatar selezionabili per poterli associare al proprio account \n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/statoIscrizioniInteration/{id_interation}/{id_evento}/": {
+      "get": {
+        "description": "Resitutisce un booleano per indicare se c'è stata l'interazione del cliente all'interno dell'evento passato in input\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id_interation",
+            "in": "path",
+            "description": "ID interazione",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          },
+          {
+            "name": "id_evento",
+            "in": "path",
+            "description": "ID evento",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ReturnBool"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getIscrittiInteration/{id_interation}/{id_evento}/": {
+      "get": {
+        "description": "Restituisce l'oggetto `iscritti` presenti nell'interazione passata in input.\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id_interation",
+            "in": "path",
+            "description": "ID interazione",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          },
+          {
+            "name": "id_evento",
+            "in": "path",
+            "description": "ID evento",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/iscrittiChart/{id_interation}/{id_evento}/": {
+      "get": {
+        "description": "Restituisce i dati in un oggetto `chart` da far visualizzare in formato grafico secondo le specifiche di Chart.js\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id_interation",
+            "in": "path",
+            "description": "ID interazione",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          },
+          {
+            "name": "id_evento",
+            "in": "path",
+            "description": "ID evento",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getProfessioni/": {
+      "get": {
+        "description": "Restituisce l'oggetto `professioni` con la lista di tutte le professioni\n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getProvince/": {
+      "get": {
+        "description": "Restituisce l'oggetto `province` con la lista di tutte le province con sigla e relativa regione \n",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token Login",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Live"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Return"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Necessario Login",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "title": "Return",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ReturnBool": {
+      "title": "Array",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "boolean",
+          "description": "true/false"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status di ritorno."
+        },
+        "navigation": {
+          "type": "string",
+          "description": "Url di Navigazione."
+        }
+      }
+    },
+    "Return": {
+      "title": "Array",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "tutti i dati dell'oggetto"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status di ritorno."
+        },
+        "navigation": {
+          "type": "string",
+          "description": "Url di Navigazione."
+        }
+      }
+    },
+    "Materiali_Evento": {
+      "title": "Array",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "video": {
+              "type": "object",
+              "properties": {
+                "titolo": {
+                  "type": "string"
+                },
+                "descrizione": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "img": {
+                  "type": "string"
+                }
+              }
+            },
+            "materiali": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "img": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "titolo": {
+                      "type": "string"
+                    },
+                    "descrizione": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "img": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Status di ritorno."
+        },
+        "navigation": {
+          "type": "string",
+          "description": "Url di Navigazione."
+        }
+      }
+    },
+    "Error": {
+      "title": "Array",
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Messaggio di errore"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status di ritorno."
+        }
+      }
+    }
+  }
+}
